@@ -1,6 +1,6 @@
 // Variables globales
 PVector ace = new PVector(0, 0.05);
-int cantidadIndividuos = 300;
+int cantidadIndividuos = 500;
 int pixelesGrilla = 1024;
 float minimaVelocidad = -2;
 float maximaVelocidad = 2;
@@ -98,12 +98,12 @@ class Individuo {
   void update() {
     
     // Movimiento Random Walk Gaussian
-    movimientoRandomGaussian();
+    //movimientoRandomGaussian();
     
     // Movimiento alternativa (descomentar para usar)
     // Se tiene que comentar gaussian para usar tambien
     
-    //alternativaMovimiento();
+    alternativaMovimiento();
   }
   
   // Funcion que determina
@@ -135,13 +135,13 @@ class Individuo {
   // Funcion alternativa al movimiento gaussian
   void alternativaMovimiento() {
     
-    float numeroAleatorio = random(0, PI);
+    float numeroAleatorio = random(0, 2*PI);
     float s = random(1, 3);
     
     posicion.x = posicion.x + (s * cos(numeroAleatorio));
     limitesEnX();
     
-    posicion.y = posicion.y + (s * cos(numeroAleatorio));
+    posicion.y = posicion.y + (s * sin(numeroAleatorio));
     limitesEnY();
   
   }
