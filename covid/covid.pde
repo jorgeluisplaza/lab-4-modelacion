@@ -39,9 +39,19 @@ void generarPersonas() {
      PVector pos = new PVector(posX, posY);
      PVector vel = new PVector(velX, velY);
     
-    // Se instancia el individuo con los valores
-     individuos[i] = new Individuo(pos, vel, ace);
-    
+    // Se instancia el individuo con los valores 
+    // Creacion de individuos sanos o enfermos
+    // Con un 10% de probabilidad de ser enfermos
+     float probabilidadInfectado = 0.1;
+     float r = random(0, 1);
+       
+      if (r <= probabilidadInfectado) {
+        // Probabilidad de Individuo Enfermo
+        individuos[i] = new Enfermo(pos, vel, ace);
+      }else{
+        // Probabilidad de Individuo Sano
+        individuos[i] = new Sano(pos, vel, ace);
+      }
   }
 }
 
@@ -68,15 +78,6 @@ class Individuo {
   PVector aceleracion;
   boolean infectado;
   
-  // Constructor
-  Individuo(PVector pos, PVector vel, PVector ace) {
-    posicion = pos;
-    velocidad = vel;
-    aceleracion = ace;
-    
-    estaInfectado(); 
-  }
-  
   // Muestra al individuo
   // Como un circulo y se rellena
   // Verde si no esta infectado y 
@@ -98,27 +99,14 @@ class Individuo {
   void update() {
     
     // Movimiento Random Walk Gaussian
-    //movimientoRandomGaussian();
+     movimientoRandomGaussian();
     
     // Movimiento alternativa (descomentar para usar)
     // Se tiene que comentar gaussian para usar tambien
     
-    alternativaMovimiento();
+    //alternativaMovimiento();
   }
   
-  // Funcion que determina
-  // Si un individuo esta infectado
-  // Con un 10% probabilidad
-  void estaInfectado() {
-    
-    float probabilidadInfectado = 0.1;
-    float r = random(0, 1);
-    infectado = false;
-    if (r <= probabilidadInfectado) {
-      infectado = true;
-    }
-  
-  }
   
   // Funcion que modela el random walk gaussian
   void movimientoRandomGaussian() {
@@ -174,4 +162,25 @@ class Individuo {
   
   }
 
+}
+
+class Sano extends Individuo{
+  
+  // Constructor Sano
+  Sano(PVector pos, PVector vel, PVector ace) {
+    posicion = pos;
+    velocidad = vel;
+    aceleracion = ace;
+    infectado = false;
+  }
+}
+
+class Enfermo extends Individuo{ 
+  // Constructor Enfermo
+  Enfermo(PVector pos, PVector vel, PVector ace) {
+    posicion = pos;
+    velocidad = vel;
+    aceleracion = ace;
+    infectado = true;
+  }
 }
